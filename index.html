@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey demo page</title>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="/js/vendor/require.js"></script>
+    <script>
+require.config({
+    paths: {
+        jquery: 'js/vendor/jquery-1.11.0.min'
+    }
+});
+    </script>
+</head>
+<body>
+<h1>Survey follows</h1>
+<div class="survey-root">
+</div>
+<script>
+require(['surveys/demo'], function (DemoSurvey) {
+    window.survey = new DemoSurvey('div.survey-root');
+});
+</script>
+</body>
+</html>
