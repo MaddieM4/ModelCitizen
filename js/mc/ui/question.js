@@ -1,6 +1,6 @@
 define('js/mc/ui/question',
-    ['jquery',   'js/mc/ui/ve','js/mc/value'],
-function(   $, mcVisualElement,     mcValue) {
+    ['jquery',   'js/mc/ui/ve','js/mc/value', 'js/mc/option'],
+function(   $, mcVisualElement,      mcValue,       mcOption) {
 
 function mcQuestion(survey, prose) {
     this.ve = new mcVisualElement(survey);
@@ -26,10 +26,10 @@ mcQuestion.prototype.radio = function(options) {
 
     var form = $('<form action="">');
     for (var i=0; i<options.length; i++) {
-        var opt = options[i];
+        var opt = new mcOption(options[i], i);
         $('<label>')
-            .text(opt)
-            .prepend('<input type="radio" name="radio_question" value="'+i+'">')
+            .text(opt.label)
+            .prepend('<input type="radio" name="radio_question" value="'+opt.key+'">')
             .appendTo(form);
         form.append('<br>');
     }

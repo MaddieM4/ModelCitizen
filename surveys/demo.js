@@ -10,7 +10,7 @@ function DemoSurvey(selector) {
         new mcQuestion(this.survey, "Firefighters are good for the economy.")
             .radio(['Yes', 'No']),
         new mcQuestion(this.survey, "Roads are good for the economy.")
-            .radio(['Yes', 'No', 'Maybe'])
+            .radio([['Yes', 'yes'], 'No', {label:'Maybe', key:'m'}])
     ];
 
     for (var i=0; i<this.questions.length; i++) {
