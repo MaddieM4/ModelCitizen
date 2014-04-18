@@ -1,11 +1,12 @@
 define('js/mc/value', [], function() {
 
-function mcValue() {
+function mcValue(default_value) {
     // Make this data available to methods, as closures,
     // But do not leak it to the outside world.
     var _private = {
         'value': undefined,
         'set': false,
+        'default': default_value,
         'subscriptions': []
     };
 
@@ -20,7 +21,7 @@ function mcValue() {
     }
 
     this.getValue = function() {
-        return _private.value;
+        return _private.set ? _private.value : _private.default;
     }
     this.setValue = function(new_value) {
         _private.value = new_value;

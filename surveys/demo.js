@@ -11,7 +11,7 @@ function DemoSurvey(selector) {
     ];
 
     for (var i=0; i<questions.length; i++) {
-        this.survey.content.append(questions[i]);
+        this.survey.append(questions[i]);
     }
 }
 

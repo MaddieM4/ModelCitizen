@@ -1,4 +1,6 @@
-define('js/mc/ui/survey', ['jquery', 'js/mc/ui/items'], function($, mcItemList) {
+define('js/mc/ui/survey',
+    [ 'jquery',   'js/mc/ui/ve', 'js/mc/value'],
+    function($, mcVisualElement,      mcValue) {
 
 var BASE_CONFIG = {
     title: 'Survey Title',
@@ -6,19 +8,29 @@ var BASE_CONFIG = {
 };
 
 function mcSurvey(selector, config) {
-    this.element = $(selector);
+    this.ve = new mcVisualElement(this);
+    this.ve.element.appendTo(selector).addClass('mc-survey');
+
     this.config = $.extend(true, BASE_CONFIG, config);
     this.responses = {};
 
-    this.title = this.config.title;
-    this.element.append($('<div class="survey-title">').text(this.title));
+    this.title = new mcValue("");
+    this.title.setValue(this.config.title);
+    this.title.element = $('<div class="mc-survey-title">').text(this.config.title);
+    this.title.subscribe(function(v){ v.element.text(v.getValue()); });
 
-    this.description = this.config.description;
-    this.element.append($('<div class="survey-description">').text(this.description));
+    this.desc = new mcValue("");
+    this.desc.setValue(this.config.description);
+    this.desc.element = $('<div class="mc-survey-desc">').text(this.config.description);
+    this.desc.subscribe(function(v){ v.element.text(v.getValue()); });
 
-    this.content = new mcItemList(
-        $('<div class="survey-content">').appendTo(this.element)
-    );
+    this.ve.element.append(this.title.element);
+    this.ve.element.append(this.desc.element);
+}
+
+mcSurvey.prototype.append = function(item) {
+    // TODO: Make more flexible
+    this.ve.element.append(item.ve.element);
 }
 
 return mcSurvey;
