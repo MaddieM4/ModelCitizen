@@ -1,4 +1,4 @@
-define('js/mc/survey', ['jquery', 'js/mc/items'], function($, mcItemList) {
+define('js/mc/ui/survey', ['jquery', 'js/mc/ui/items'], function($, mcItemList) {
 
 var BASE_CONFIG = {
     title: 'Survey Title',
@@ -8,6 +8,7 @@ var BASE_CONFIG = {
 function mcSurvey(selector, config) {
     this.element = $(selector);
     this.config = $.extend(true, BASE_CONFIG, config);
+    this.responses = {};
 
     this.title = this.config.title;
     this.element.append($('<div class="survey-title">').text(this.title));

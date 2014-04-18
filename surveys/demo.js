@@ -1,4 +1,4 @@
-define('surveys/demo', ['js/mc/survey','js/mc/question'], function(mcSurvey, mcQuestion) {
+define('surveys/demo', ['js/mc/ui/survey','js/mc/ui/question'], function(mcSurvey, mcQuestion) {
 
 function DemoSurvey(selector) {
     var config = {
@@ -7,7 +7,7 @@ function DemoSurvey(selector) {
     this.survey = new mcSurvey(selector, config);
 
     var questions = [
-        new mcQuestion("Firefighters are good for the economy. Yes or no?")
+        new mcQuestion(this.survey, "Firefighters are good for the economy.")
     ];
 
     for (var i=0; i<questions.length; i++) {

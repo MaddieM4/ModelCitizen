@@ -1,6 +1,6 @@
-define('js/mc/question', ['jquery'], function($) {
+define('js/mc/ui/question', ['jquery'], function($) {
 
-function mcQuestion(prompt_text) {
+function mcQuestion(survey, prompt_text) {
     this.element = $('<div class="survey-question">');
     this.element.append(
         $('<div class="prompt">').html(prompt_text)

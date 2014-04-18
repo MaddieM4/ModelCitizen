@@ -1,4 +1,4 @@
-define('js/mc/items', ['jquery'], function($) {
+define('js/mc/ui/items', ['jquery'], function($) {
 
 function mcItemList(element) {
     this.element = element;
