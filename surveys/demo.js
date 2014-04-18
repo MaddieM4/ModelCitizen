@@ -8,6 +8,9 @@ function DemoSurvey(selector) {
 
     this.questions = [
         new mcQuestion(this.survey, "Firefighters are good for the economy.")
+            .radio(['Yes', 'No']),
+        new mcQuestion(this.survey, "Roads are good for the economy.")
+            .radio(['Yes', 'No', 'Maybe'])
     ];
 
     for (var i=0; i<this.questions.length; i++) {

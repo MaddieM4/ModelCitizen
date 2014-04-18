@@ -24,6 +24,10 @@ div.mc-question {
     margin: 10px;
 }
 
+div.mc-question .mc-contents {
+    margin-top: 5px;
+}
+
 div.mc-hidden {
     display: none;
 }
