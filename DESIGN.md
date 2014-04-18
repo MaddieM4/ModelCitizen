@@ -72,3 +72,14 @@ As you can see, each listed dependency is one of a few possible forms, given by 
  * `<` Write only response
  * `*` R/W response
  * `$` Element from q.contents (via q.contents.find)
+
+Read access implies both *subscription* and *initialization.* When any of the subscribed responses are changed, the .on() callback is re-run. But also, when the survey is first loaded, we poll that data, and run the callback (as if it had changed) with those initial values. This allows us to calculate visibility before putting anything onto the screen.
+
+#### Visibility
+
+Each visual element has a .setVisible(bool) function, which sets whether the question is visible or not. By default, this is `true`. But you can set elements to be invisible, which has two effects:
+
+1. Object, and children, are not rendered on page. They are actually not present in the page DOM, except for a placeholder.
+2. We don't calculate the visibility or callbacks of any child elements.
+
+These optimizations allow us to have a client-side map of the whole survey, without expending much resources (or incurring startup latency) for things not on the page.
