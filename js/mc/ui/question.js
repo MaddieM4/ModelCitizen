@@ -3,6 +3,7 @@ define('js/mc/ui/question',
 function(   $, mcVisualElement,      mcValue,       mcOption) {
 
 function mcQuestion(survey, prose) {
+    this.survey = survey;
     this.ve = new mcVisualElement(survey);
     this.ve.element.addClass('mc-question');
 
@@ -20,7 +21,7 @@ mcQuestion.prototype.setProse = function(value) {
     this.prose.setValue(value)
 }
 
-mcQuestion.prototype.radio = function(options) {
+mcQuestion.prototype.radio = function(options, response_name) {
     // Remove any existing elements
     this.contents.empty();
 
@@ -33,8 +34,14 @@ mcQuestion.prototype.radio = function(options) {
             .appendTo(form);
         form.append('<br>');
     }
-
     this.contents.append(form);
+
+    var response = this.survey.getResponse(response_name);
+    form.find('input').click(function(){
+        var el = $(this);
+        var key = el.attr('value');
+        response.setValue(key);
+    });
     return this;
 }
 
