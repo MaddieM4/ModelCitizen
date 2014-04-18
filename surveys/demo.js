@@ -11,6 +11,7 @@ function DemoSurvey(selector) {
             .radio(['Yes', 'No'], 'firefighters'),
         new mcQuestion(this.survey, "Roads are good for the economy.")
             .radio([['Yes', 'yes'], 'No', {label:'Maybe', key:'m'}], 'roads')
+            .on(['*firefighters'], function(ff) { console.log(ff); })
     ];
 
     for (var i=0; i<this.questions.length; i++) {

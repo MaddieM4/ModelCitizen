@@ -1,6 +1,6 @@
 define('js/mc/ui/survey',
-    [ 'jquery',   'js/mc/ui/ve', 'js/mc/value'],
-    function($, mcVisualElement,      mcValue) {
+    [ 'jquery',   'js/mc/ui/ve', 'js/mc/value', 'js/mc/listener'],
+    function($, mcVisualElement,      mcValue,        mcListener) {
 
 var BASE_CONFIG = {
     title: 'Survey Title',
@@ -30,11 +30,27 @@ function mcSurvey(selector, config) {
         }
         return _private[name];
     }
+
+    this.listener = new mcListener();
+    this.listener.finders = {
+        '>': this.getResponse,
+        '<': this.getResponse,
+        '*': this.getResponse
+    };
+    this.listener.subscribers = {
+        '>': this.getResponse,
+        '<': function(){},
+        '*': this.getResponse
+    };
 }
 
 mcSurvey.prototype.append = function(item) {
     // TODO: Make more flexible
     this.ve.element.append(item.ve.element);
+}
+
+mcSurvey.prototype.on = function() {
+    this.listener.on.apply(this.listener, arguments);
 }
 
 return mcSurvey;

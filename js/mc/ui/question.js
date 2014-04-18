@@ -21,6 +21,11 @@ mcQuestion.prototype.setProse = function(value) {
     this.prose.setValue(value)
 }
 
+mcQuestion.prototype.on = function() {
+    this.survey.on.apply(this.survey, arguments);
+    return this;
+}
+
 mcQuestion.prototype.radio = function(options, response_name) {
     // Remove any existing elements
     this.contents.empty();
