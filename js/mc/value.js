@@ -1,21 +1,22 @@
-define('js/mc/value', [], function() {
+define('js/mc/value', ['jquery'], function($) {
 
-function mcValue(default_value) {
+function mcValue(default_value, initial_value) {
     // Make this data available to methods, as closures,
     // But do not leak it to the outside world.
     var _private = {
-        'value': undefined,
-        'set': false,
+        'value': initial_value,
+        'set': !(initial_value === undefined),
         'default': default_value,
         'subscriptions': []
     };
+    var self = this;
 
     // On change, do callbacks
     function onChange() {
         for (var i = 0; i < _private.subscriptions.length; i++) {
             var callback = _private.subscriptions[i];
             if (typeof callback == 'function') {
-                callback(this)
+                callback(self);
             }
         }
     }
@@ -47,6 +48,28 @@ function mcValue(default_value) {
         _private.subscriptions[id] = null;
     }
 };
+
+//// UI FUNCTIONS (BROWSER ONLY) ==============================================
+
+// Create element whose content is filled with value's content,
+// based on the JQuery element.text() function.
+mcValue.prototype.text = function(selector) {
+    var element = $(selector).text(this.getValue());
+    this.subscribe(function(v){
+        element.text( v.getValue() );
+    });
+    return element;
+}
+
+// Create element whose content is filled with value's content,
+// based on the JQuery element.html() function.
+mcValue.prototype.html = function(selector) {
+    var element = $(selector).html(this.getValue());
+    this.subscribe(function(v){
+        element.html( v.getValue() );
+    });
+    return element;
+}
 
 return mcValue;
 

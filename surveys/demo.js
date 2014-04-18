@@ -6,12 +6,12 @@ function DemoSurvey(selector) {
     }
     this.survey = new mcSurvey(selector, config);
 
-    var questions = [
+    this.questions = [
         new mcQuestion(this.survey, "Firefighters are good for the economy.")
     ];
 
-    for (var i=0; i<questions.length; i++) {
-        this.survey.append(questions[i]);
+    for (var i=0; i<this.questions.length; i++) {
+        this.survey.append(this.questions[i]);
     }
 }
 

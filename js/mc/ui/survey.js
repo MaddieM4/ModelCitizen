@@ -14,18 +14,11 @@ function mcSurvey(selector, config) {
     this.config = $.extend(true, BASE_CONFIG, config);
     this.responses = {};
 
-    this.title = new mcValue("");
-    this.title.setValue(this.config.title);
-    this.title.element = $('<div class="mc-survey-title">').text(this.config.title);
-    this.title.subscribe(function(v){ v.element.text(v.getValue()); });
+    this.title = new mcValue("", this.config.title);
+    this.ve.element.append(this.title.text('<div class="mc-survey-title">'));
 
-    this.desc = new mcValue("");
-    this.desc.setValue(this.config.description);
-    this.desc.element = $('<div class="mc-survey-desc">').text(this.config.description);
-    this.desc.subscribe(function(v){ v.element.text(v.getValue()); });
-
-    this.ve.element.append(this.title.element);
-    this.ve.element.append(this.desc.element);
+    this.desc = new mcValue("", this.config.description);
+    this.ve.element.append(this.desc.text('<div class="mc-survey-desc">'));
 }
 
 mcSurvey.prototype.append = function(item) {
