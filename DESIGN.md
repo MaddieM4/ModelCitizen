@@ -50,7 +50,7 @@ q.on(['>some_dep'], function(dep) {
     // Show q if dep question has been answered
     q.setVisible(dep.isSet());
 
-    q.prose = "How has " + dep.getValue() + " affected your life?";
+    q.setProse("How has " + dep.getValue() + " affected your life?");
 });
 q.contents.append('<input class="the_input">');
 q.on(['$input.the_input', '<output_response'], function(input, response) {
