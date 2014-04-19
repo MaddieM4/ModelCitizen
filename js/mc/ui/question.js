@@ -32,6 +32,10 @@ function mcQuestion(survey, prose) {
             }
         }
     }
+    self.listener.finders['?'] = function(name) {
+        return self;
+    }
+    self.listener.subscribers['?'] = function(){};
 }
 
 mcQuestion.prototype.setVisible = function(value) {
@@ -61,9 +65,34 @@ mcQuestion.prototype.radio = function(options, response_name) {
     }
     this.contents.append(form);
 
-    this.on(['$input:radio', '<'+response_name], function(inputs, response) {
+    this.on(['$input', '<'+response_name], function(inputs, response) {
         var key = inputs.filter(':checked').attr('value');
         response.setValue(key);
+    });
+    return this;
+}
+
+mcQuestion.prototype.checkbox = function(options, response_name) {
+    // Remove any existing elements
+    this.contents.empty();
+
+    var form = $('<form action="">');
+    for (var i=0; i<options.length; i++) {
+        var opt = new mcOption(options[i], i);
+        $('<label>')
+            .text(opt.label)
+            .prepend('<input type="checkbox" name="check_question" value="'+opt.key+'">')
+            .appendTo(form);
+        form.append('<br>');
+    }
+    this.contents.append(form);
+
+    this.on(['$input', '<'+response_name], function(inputs, response) {
+        var keys = inputs.filter(':checked').map(
+            function(){ return $(this).attr('value'); }
+        ).get();
+
+        keys.length > 0 ? response.setValue(keys) : response.unSet();
     });
     return this;
 }

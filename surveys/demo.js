@@ -13,6 +13,15 @@ function DemoSurvey(selector) {
             .radio([['Yes', 'yes'], 'No', {label:'Maybe', key:'m'}], 'roads')
             .on(['*firefighters', '$'], function(ff, contents) {
                 contents.append('<p>Firefighters = ' + ff.getValue() + '</p>');
+            }),
+        new mcQuestion(this.survey, "For what reasons do you hate freedom?")
+            .checkbox([ ['Money', 'money'], ['Statism', 'statism'] ], 'hate-freedom')
+            .on(['>roads', '?'], function(roads_response, q) {
+                if (!roads_response.isSet() || roads_response.getValue() === 'yes') {
+                    q.setVisible(false);
+                } else {
+                    q.setVisible(true);
+                }
             })
     ];
 
