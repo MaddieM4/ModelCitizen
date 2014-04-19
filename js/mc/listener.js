@@ -54,7 +54,10 @@ mcListener.prototype.multiSubscribe = function(deps, callback) {
         // It indicates that there is nothing to subscribe to.
         var signal = subscriber(name);
         if (signal !== undefined) {
-            signal.subscribe(callback);
+            typeof signal === 'function'
+                ? signal(callback)
+                : signal.subscribe(callback)
+                ;
         }
     }
 }

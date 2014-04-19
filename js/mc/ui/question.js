@@ -1,17 +1,37 @@
 define('js/mc/ui/question',
-    ['jquery',   'js/mc/ui/ve','js/mc/value', 'js/mc/option'],
-function(   $, mcVisualElement,      mcValue,       mcOption) {
+    ['jquery',   'js/mc/ui/ve','js/mc/value', 'js/mc/option', 'js/mc/listener'],
+function(   $, mcVisualElement,      mcValue,       mcOption,      mcListener) {
 
 function mcQuestion(survey, prose) {
-    this.survey = survey;
-    this.ve = new mcVisualElement(survey);
-    this.ve.element.addClass('mc-question');
+    var self = this;
 
-    this.prose = new mcValue("", prose);
-    this.ve.element.append(this.prose.html('<div class="mc-prose">'));
+    self.survey = survey;
+    self.ve = new mcVisualElement(survey);
+    self.ve.element.addClass('mc-question');
 
-    this.contents = $('<div class="mc-contents">')
-        .appendTo(this.ve.element);
+    self.prose = new mcValue("", prose);
+    self.ve.element.append(self.prose.html('<div class="mc-prose">'));
+
+    self.contents = $('<div class="mc-contents">')
+        .appendTo(self.ve.element);
+
+    self.listener = new mcListener(self.survey.listener);
+    self.listener.finders['$'] = function(name) {
+        if (name === '') {
+            return self.contents;
+        } else {
+            return self.contents.find(name);
+        }
+    }
+    self.listener.subscribers['$'] = function(name) {
+        if (name === '') {
+            return undefined;
+        } else {
+            return function(callback) {
+                self.contents.find(name).on('click', callback);
+            }
+        }
+    }
 }
 
 mcQuestion.prototype.setVisible = function(value) {
@@ -22,7 +42,7 @@ mcQuestion.prototype.setProse = function(value) {
 }
 
 mcQuestion.prototype.on = function() {
-    this.survey.on.apply(this.survey, arguments);
+    this.listener.on.apply(this.listener, arguments);
     return this;
 }
 
@@ -41,10 +61,8 @@ mcQuestion.prototype.radio = function(options, response_name) {
     }
     this.contents.append(form);
 
-    var response = this.survey.getResponse(response_name);
-    form.find('input').click(function(){
-        var el = $(this);
-        var key = el.attr('value');
+    this.on(['$input:radio', '<'+response_name], function(inputs, response) {
+        var key = inputs.filter(':checked').attr('value');
         response.setValue(key);
     });
     return this;
