@@ -3,7 +3,7 @@ define('js/mc/ui/form/basic',
     function($, mcValue,       mcOption) {
 
 function _options(option_template, option_list) {
-    var i, option, option_string, option_element;
+    var i, option, option_string;
 
     // Clear any existing options
     this.element.empty();
@@ -11,11 +11,10 @@ function _options(option_template, option_list) {
     // Create and add elements, based on option_list
     for (i=0; i<option_list.length; i++) {
         option         = new mcOption(option_list[i], i);
-        option_string  = option_template.replace(/{{OPT_KEY}}/, option.key);
-        option_element = $('<label>')
-            .text(option.label)
-            .prepend(option_string);
-        this.element.append(option_element).append('<br>');
+        option_string  = option_template
+            .replace(/{{OPT_KEY}}/, option.key)
+            .replace(/{{OPT_LABEL}}/, option.label);
+        this.element.append(option_string);
     }
 
     // Make sure events are triggered
@@ -28,7 +27,8 @@ function radio(value) {
     this.value = value || new mcValue()
     this.element = $('<form action="">');
     this.options = _options.bind(this,
-        '<input type="radio" name="radio_question" value="{{OPT_KEY}}">');
+        '<label><input type="radio" name="radio_question" ' +
+        'value="{{OPT_KEY}}"/>{{OPT_LABEL}}</label><br/>');
     this.on_change = function() {
         var key = this.element.find('input:checked').attr('value');
         this.value.setValue(key);
@@ -39,7 +39,8 @@ function checkbox(value) {
     this.value = value || new mcValue()
     this.element = $('<form action="">');
     this.options = _options.bind(this,
-        '<input type="checkbox" name="check_question" value="{{OPT_KEY}}">');
+        '<label><input type="checkbox" name="check_question" ' +
+        'value="{{OPT_KEY}}"/>{{OPT_LABEL}}</label><br/>');
     this.on_change = function() {
         var keys = this.element.find('input:checked').map(
             function(){ return $(this).attr('value'); }
@@ -48,9 +49,22 @@ function checkbox(value) {
     }
 }
 
+function dropdown(value) {
+    this.value = value || new mcValue()
+    this.element = $('<select>');
+    this.options = _options.bind(this,
+        '<option value="{{OPT_KEY}}">{{OPT_LABEL}}</option>');
+    this.on_change = function() {
+        var key = this.element.find('option:selected').val();
+        this.value.setValue(key);
+    }
+    this.element.change(this.on_change.bind(this));
+}
+
 return {
     'radio': radio,
-    'checkbox': checkbox
+    'checkbox': checkbox,
+    'dropdown': dropdown
 };
 
 })

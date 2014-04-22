@@ -24,7 +24,9 @@ function DemoSurvey(selector) {
                 } else {
                     q.setVisible(true);
                 }
-            })
+            }),
+        new mcQuestion(this.survey, "Mirror of roads question")
+            .dropdown([['Yes', 'yes'], 'No', {label:'Maybe', key:'m'}], 'roads')
     ];
 
     for (var i=0; i<this.questions.length; i++) {

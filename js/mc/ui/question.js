@@ -56,6 +56,13 @@ mcQuestion.prototype.checkbox = function(options, response_name) {
     return this;
 }
 
+mcQuestion.prototype.dropdown = function(options, response_name) {
+    var dd = new fb.dropdown(this.survey.getResponse(response_name))
+        .options(options);
+    this.contents.empty().append(dd.element)
+    return this;
+}
+
 return mcQuestion;
 
 });
