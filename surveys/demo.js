@@ -1,24 +1,25 @@
 define('surveys/demo',
-    ['js/mc/ui/survey','js/mc/ui/question','js/mc/ui/text'],
-    function( mcSurvey, mcQuestion,         mcTextDisplay) {
+    ['js/mc/ui/survey','js/mc/ui/question','js/mc/ui/text','js/mc/ui/group'],
+    function( mcSurvey, mcQuestion,         mcTextDisplay, mcQuestionGroup) {
 
 function DemoSurvey(selector) {
     var config = {
         title: 'Demo survey',
     }
-    this.survey = new mcSurvey(selector, config);
+    var s = new mcSurvey(selector, config);
+    this.survey = s;
 
     this.questions = [
-        new mcQuestion(this.survey, "Firefighters are good for the economy.")
+        new mcQuestion(s, "Firefighters are good for the economy.")
             .radio(['Yes', 'No'], 'firefighters'),
-        new mcQuestion(this.survey, "Roads are good for the economy.")
+        new mcQuestion(s, "Roads are good for the economy.")
             .radio([['Yes', 'yes'], 'No', {label:'Maybe', key:'m'}], 'roads')
             .on(['*firefighters', '$'], function(ff, contents) {
                 if (ff.isSet()) {
                     contents.append('<p>Firefighters = ' + ff.getValue() + '</p>');
                 }
             }),
-        new mcQuestion(this.survey, "For what reasons do you hate freedom?")
+        new mcQuestion(s, "For what reasons do you hate freedom?")
             .checkbox([ ['Money', 'money'], ['Statism', 'statism'] ], 'hate-freedom')
             .on(['>roads', '?'], function(roads_response, q) {
                 if (!roads_response.isSet() || roads_response.getValue() === 'yes') {
@@ -27,15 +28,15 @@ function DemoSurvey(selector) {
                     q.setVisible(true);
                 }
             }),
-        new mcQuestion(this.survey, "Mirror of roads question")
+        new mcQuestion(s, "Mirror of roads question")
             .dropdown([['Yes', 'yes'], 'No', {label:'Maybe', key:'m'}], 'roads'),
-        new mcQuestion(this.survey, "Mirror of freedom question, extended")
+        new mcQuestion(s, "Mirror of freedom question, extended")
             .checkbox([
                 ['Money', 'money'],
                 ['Statism', 'statism'],
                 ['The liberals told me to', 'liberals'],
             ], 'hate-freedom'),
-        new mcTextDisplay(this.survey, "This is a text display.")
+        new mcTextDisplay(s, "This is a text display.")
             .on(['>roads', '?'], function(roads_response, q) {
                 var tail = roads_response.isSet()
                     ? ' Current "roads" value is ' + roads_response.getValue() + '.'
@@ -43,8 +44,20 @@ function DemoSurvey(selector) {
                     ;
                 q.setProse('This is a text display.' + tail);
             }),
-        new mcQuestion(this.survey, "Show more questions (not yet implemented)")
-            .yesno('show-more')
+        new mcQuestion(s, "Show more questions (not yet implemented)")
+            .yesno('show-more'),
+        new mcQuestionGroup(s)
+            .append(new mcTextDisplay(s, "This TD is in a group!"))
+            .append(new mcQuestion(s, "How do you like these additional questions?")
+                .radio([
+                    ["They're not that good.", "not good"],
+                    ["They're okay.", "okay"],
+                    ["They're THE FREAKING BEST.", "best"]
+                ], 'like-additional-questions')
+            ).on(['>show-more', '?'], function(sm_value, group) {
+                // Normalize out undefined, rather than playing with sm_value.isSet()
+                group.setVisible(sm_value.getValue() ? true : false);
+            })
     ];
 
     for (var i=0; i<this.questions.length; i++) {
