@@ -22,19 +22,11 @@ function mcQuestion(survey, prose) {
         } else {
             return self.contents.find(name);
         }
-    }
-    self.listener.subscribers['$'] = function(name) {
-        if (name === '') {
-            return undefined;
-        } else {
-            return function(callback) {
-                self.contents.find(name).on('click', callback);
-            }
-        }
-    }
+    };
+    self.listener.subscribers['$'] = function(name){};
     self.listener.finders['?'] = function(name) {
         return self;
-    }
+    };
     self.listener.subscribers['?'] = function(){};
 }
 
