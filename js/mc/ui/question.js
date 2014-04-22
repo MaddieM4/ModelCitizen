@@ -1,6 +1,6 @@
 define('js/mc/ui/question',
-    ['jquery',   'js/mc/ui/ve','js/mc/value', 'js/mc/option', 'js/mc/listener'],
-function(   $, mcVisualElement,      mcValue,       mcOption,      mcListener) {
+    ['jquery',   'js/mc/ui/ve','js/mc/value', 'js/mc/ui/form/basic', 'js/mc/listener'],
+function(   $, mcVisualElement,      mcValue,                    fb,      mcListener) {
 
 function mcQuestion(survey, prose) {
     var self = this;
@@ -51,49 +51,17 @@ mcQuestion.prototype.on = function() {
 }
 
 mcQuestion.prototype.radio = function(options, response_name) {
-    // Remove any existing elements
-    this.contents.empty();
-
-    var form = $('<form action="">');
-    for (var i=0; i<options.length; i++) {
-        var opt = new mcOption(options[i], i);
-        $('<label>')
-            .text(opt.label)
-            .prepend('<input type="radio" name="radio_question" value="'+opt.key+'">')
-            .appendTo(form);
-        form.append('<br>');
-    }
-    this.contents.append(form);
-
-    this.on(['$input', '<'+response_name], function(inputs, response) {
-        var key = inputs.filter(':checked').attr('value');
-        response.setValue(key);
-    });
+    var radio = new fb.radio(this.survey.getResponse(response_name))
+        .options(options);
+    this.contents.empty().append(radio.element)
+    this._radio = radio;
     return this;
 }
 
 mcQuestion.prototype.checkbox = function(options, response_name) {
-    // Remove any existing elements
-    this.contents.empty();
-
-    var form = $('<form action="">');
-    for (var i=0; i<options.length; i++) {
-        var opt = new mcOption(options[i], i);
-        $('<label>')
-            .text(opt.label)
-            .prepend('<input type="checkbox" name="check_question" value="'+opt.key+'">')
-            .appendTo(form);
-        form.append('<br>');
-    }
-    this.contents.append(form);
-
-    this.on(['$input', '<'+response_name], function(inputs, response) {
-        var keys = inputs.filter(':checked').map(
-            function(){ return $(this).attr('value'); }
-        ).get();
-
-        keys.length > 0 ? response.setValue(keys) : response.unSet();
-    });
+    var cb = new fb.checkbox(this.survey.getResponse(response_name))
+        .options(options);
+    this.contents.empty().append(cb.element)
     return this;
 }
 
