@@ -4,7 +4,8 @@ define('js/mc/ui/survey',
 
 var BASE_CONFIG = {
     title: 'Survey Title',
-    description: 'A survey'
+    description: 'A survey',
+    footer: 'Survey powered by <a href="https://github.com/campadrenalin/ModelCitizen">ModelCitizen</a> framework.'
 };
 
 function mcSurvey(selector, config) {
@@ -23,6 +24,11 @@ function mcSurvey(selector, config) {
 
     this.desc = new mcValue("", this.config.description);
     this.ve.element.append(this.desc.text('<div class="mc-survey-desc">'));
+
+    this.contents = $('<div class="mc-survey-contents">').appendTo(this.ve.element);
+
+    this.footer = new mcValue("", this.config.footer);
+    this.ve.element.append(this.footer.html('<div class="mc-survey-footer">'));
 
     this.getResponse = function(name) {
         if (_private[name] === undefined) {
@@ -45,8 +51,8 @@ function mcSurvey(selector, config) {
 }
 
 mcSurvey.prototype.append = function(item) {
-    // TODO: Make more flexible
-    this.ve.element.append(item.ve.element);
+    // TODO: Make more flexible about input
+    this.contents.append(item.ve.element);
 }
 
 mcSurvey.prototype.on = function() {

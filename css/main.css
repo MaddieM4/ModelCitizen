@@ -18,6 +18,16 @@ div.mc-survey-desc {
     font-style: italic;
 }
 
+div.mc-survey-footer {
+    border-top: 1px solid #E44;
+    padding: 10px 5px;
+    margin-top: 10px;
+    font-style: italic;
+    font-size: 0.6em;
+    background-color: #CCC;
+    text-align: center;
+}
+
 div.mc-question {
     background-color: #EEE;
     padding: 5px;
