@@ -1,4 +1,6 @@
-define('surveys/demo', ['js/mc/ui/survey','js/mc/ui/question'], function(mcSurvey, mcQuestion) {
+define('surveys/demo',
+    ['js/mc/ui/survey','js/mc/ui/question','js/mc/ui/text'],
+    function( mcSurvey, mcQuestion,         mcTextDisplay) {
 
 function DemoSurvey(selector) {
     var config = {
@@ -32,7 +34,15 @@ function DemoSurvey(selector) {
                 ['Money', 'money'],
                 ['Statism', 'statism'],
                 ['The liberals told me to', 'liberals'],
-            ], 'hate-freedom')
+            ], 'hate-freedom'),
+        new mcTextDisplay(this.survey, "This is a text display.")
+            .on(['>roads', '?'], function(roads_response, q) {
+                var tail = roads_response.isSet()
+                    ? ' Current "roads" value is ' + roads_response.getValue() + '.'
+                    : ''
+                    ;
+                q.setProse('This is a text display.' + tail);
+            })
     ];
 
     for (var i=0; i<this.questions.length; i++) {

@@ -34,6 +34,11 @@ div.mc-question {
     margin: 10px;
 }
 
+div.mc-text {
+    background-color: #FEE;
+    font-weight: bold;
+}
+
 div.mc-question .mc-contents {
     margin-top: 5px;
 }
