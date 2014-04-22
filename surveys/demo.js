@@ -26,7 +26,13 @@ function DemoSurvey(selector) {
                 }
             }),
         new mcQuestion(this.survey, "Mirror of roads question")
-            .dropdown([['Yes', 'yes'], 'No', {label:'Maybe', key:'m'}], 'roads')
+            .dropdown([['Yes', 'yes'], 'No', {label:'Maybe', key:'m'}], 'roads'),
+        new mcQuestion(this.survey, "Mirror of freedom question, extended")
+            .checkbox([
+                ['Money', 'money'],
+                ['Statism', 'statism'],
+                ['The liberals told me to', 'liberals'],
+            ], 'hate-freedom')
     ];
 
     for (var i=0; i<this.questions.length; i++) {

@@ -33,10 +33,16 @@ function radio(value) {
         var key = this.element.find('input:checked').attr('value');
         this.value.setValue(key);
     }
+    this.subscription = this.value.subscribe(function(value) {
+        this.element.find('input').each(function(_, el) {
+            el = $(el);
+            el.prop('checked', value.isSet() && value.getValue() == el.val());
+        });
+    }.bind(this));
 }
 
 function checkbox(value) {
-    this.value = value || new mcValue()
+    this.value = value || new mcValue([])
     this.element = $('<form action="">');
     this.options = _options.bind(this,
         '<label><input type="checkbox" name="check_question" ' +
@@ -47,6 +53,13 @@ function checkbox(value) {
         ).get();
         keys.length > 0 ? this.value.setValue(keys) : this.value.unSet();
     }
+    this.subscription = this.value.subscribe(function(value) {
+        var keys = value.isSet() ? value.getValue() : [];
+        this.element.find('input').each(function(_, el) {
+            el = $(el);
+            el.prop('checked', keys.indexOf(el.val()) != -1);
+        });
+    }.bind(this));
 }
 
 function dropdown(value) {
@@ -59,6 +72,9 @@ function dropdown(value) {
         this.value.setValue(key);
     }
     this.element.change(this.on_change.bind(this));
+    this.subscription = this.value.subscribe(function(value) {
+        this.element.val(value.getValue());
+    }.bind(this));
 }
 
 return {
