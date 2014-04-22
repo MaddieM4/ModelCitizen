@@ -66,6 +66,9 @@ mcListener.prototype.multiSubscribe = function(deps, callback) {
 mcListener.prototype.on = function(deps, callback) {
     var wrapped_closure = this.wrap(deps, callback);
     this.multiSubscribe(deps, wrapped_closure);
+
+    // Call at init
+    wrapped_closure();
 }
 
 return mcListener;

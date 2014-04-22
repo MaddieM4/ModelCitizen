@@ -12,7 +12,9 @@ function DemoSurvey(selector) {
         new mcQuestion(this.survey, "Roads are good for the economy.")
             .radio([['Yes', 'yes'], 'No', {label:'Maybe', key:'m'}], 'roads')
             .on(['*firefighters', '$'], function(ff, contents) {
-                contents.append('<p>Firefighters = ' + ff.getValue() + '</p>');
+                if (ff.isSet()) {
+                    contents.append('<p>Firefighters = ' + ff.getValue() + '</p>');
+                }
             }),
         new mcQuestion(this.survey, "For what reasons do you hate freedom?")
             .checkbox([ ['Money', 'money'], ['Statism', 'statism'] ], 'hate-freedom')
