@@ -46,7 +46,6 @@ mcQuestion.prototype.radio = function(options, response_name) {
     var radio = new fb.radio(this.survey.getResponse(response_name))
         .options(options);
     this.contents.empty().append(radio.element)
-    this._radio = radio;
     return this;
 }
 
