@@ -63,6 +63,13 @@ mcQuestion.prototype.dropdown = function(options, response_name) {
     return this;
 }
 
+mcQuestion.prototype.yesno = function(response_name) {
+    return this.radio([
+        ['Yes', 'yes', true],
+        ['No',  'no', false]
+    ], response_name);
+}
+
 return mcQuestion;
 
 });

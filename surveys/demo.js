@@ -42,7 +42,9 @@ function DemoSurvey(selector) {
                     : ''
                     ;
                 q.setProse('This is a text display.' + tail);
-            })
+            }),
+        new mcQuestion(this.survey, "Show more questions (not yet implemented)")
+            .yesno('show-more')
     ];
 
     for (var i=0; i<this.questions.length; i++) {

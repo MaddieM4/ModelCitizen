@@ -3,7 +3,7 @@ define('js/mc/ui/form/basic',
     function($, mcValue,       mcOption) {
 
 function _options(option_template, option_list) {
-    var i, option, option_string;
+    var i, option, option_string, option_element;
 
     // Clear any existing options
     this.element.empty();
@@ -14,7 +14,13 @@ function _options(option_template, option_list) {
         option_string  = option_template
             .replace(/{{OPT_KEY}}/, option.key)
             .replace(/{{OPT_LABEL}}/, option.label);
-        this.element.append(option_string);
+
+        option_element = $(option_string);
+        option_element.find('.store-data').data('opt-data', option.data);
+        if (option_element.hasClass('store-data')) {
+            option_element.data('opt-data', option.data);
+        }
+        this.element.append(option_element);
     }
 
     // Make sure events are triggered
@@ -27,16 +33,16 @@ function radio(value) {
     this.value = value || new mcValue()
     this.element = $('<form action="">');
     this.options = _options.bind(this,
-        '<label><input type="radio" name="radio_question" ' +
+        '<label><input type="radio" name="radio_question" class="store-data" ' +
         'value="{{OPT_KEY}}"/>{{OPT_LABEL}}</label><br/>');
     this.on_change = function() {
-        var key = this.element.find('input:checked').attr('value');
+        var key = this.element.find('input:checked').data('opt-data');
         this.value.setValue(key);
     }
     this.subscription = this.value.subscribe(function(value) {
         this.element.find('input').each(function(_, el) {
             el = $(el);
-            el.prop('checked', value.isSet() && value.getValue() == el.val());
+            el.prop('checked', value.isSet() && value.getValue() === el.data('opt-data'));
         });
     }.bind(this));
 }
@@ -45,11 +51,11 @@ function checkbox(value) {
     this.value = value || new mcValue([])
     this.element = $('<form action="">');
     this.options = _options.bind(this,
-        '<label><input type="checkbox" name="check_question" ' +
+        '<label><input type="checkbox" name="check_question" class="store-data" ' +
         'value="{{OPT_KEY}}"/>{{OPT_LABEL}}</label><br/>');
     this.on_change = function() {
         var keys = this.element.find('input:checked').map(
-            function(){ return $(this).attr('value'); }
+            function(){ return $(this).data('opt-data'); }
         ).get();
         keys.length > 0 ? this.value.setValue(keys) : this.value.unSet();
     }
@@ -57,7 +63,7 @@ function checkbox(value) {
         var keys = value.isSet() ? value.getValue() : [];
         this.element.find('input').each(function(_, el) {
             el = $(el);
-            el.prop('checked', keys.indexOf(el.val()) != -1);
+            el.prop('checked', keys.indexOf(el.data('opt-data')) != -1);
         });
     }.bind(this));
 }
@@ -66,14 +72,18 @@ function dropdown(value) {
     this.value = value || new mcValue()
     this.element = $('<select>');
     this.options = _options.bind(this,
-        '<option value="{{OPT_KEY}}">{{OPT_LABEL}}</option>');
+        '<option class="store-data" value="{{OPT_KEY}}">{{OPT_LABEL}}</option>');
     this.on_change = function() {
-        var key = this.element.find('option:selected').val();
+        var key = this.element.find('option:selected').data('opt-data');
         this.value.setValue(key);
     }
     this.element.change(this.on_change.bind(this));
     this.subscription = this.value.subscribe(function(value) {
-        this.element.val(value.getValue());
+        var val = value.getValue();
+        var key = this.element.children().filter(function(){
+            return $(this).data('opt-data') === val;
+        }).val();
+        this.element.val(key);
     }.bind(this));
 }
 
