@@ -83,3 +83,43 @@ Each visual element has a .setVisible(bool) function, which sets whether the que
 2. We don't calculate the visibility or callbacks of any child elements.
 
 These optimizations allow us to have a client-side map of the whole survey, without expending much resources (or incurring startup latency) for things not on the page.
+
+## Server design
+
+We have the following use cases to consider:
+
+ * Static file hosting
+    * Embedding
+    * Hosted survey frontend
+    * Hosted viz frontend
+ * API backend
+
+A server may host frontend stuff, without hosting any backend stuff, or vice versa.
+
+### Static file hosting
+
+Can basically be handled by nginx.
+
+### Frontend apps
+
+Get variables via URL, for example, who you are and which survey to view. Mostly defers to a few templates, which in turn defer to statically-hosted data.
+
+### API Backend
+
+Server that communicates with database. Must have access to surveys for validation purposes.
+
+In order to run continuously, we must be able to enable and disable surveys via REST calls.
+
+## Deployment workflow
+
+ * Develop purely client-side, by leaving survey URL blank.
+ * Survey is made of these components:
+    * UI (client)
+    * Validation (client, server)
+    * VizPrep (server)
+    * Viz (client)
+ * When you have the first two pretty well-tested in the browser, hit a backend URL to (re)load the survey in the backend.
+ * Test for errors, populate data.
+ * Write VizPrep and Viz components.
+ * Reload survey in backend.
+ * Test visualization.
