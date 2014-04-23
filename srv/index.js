@@ -16,7 +16,9 @@ requirejs(['express','jade','console'], function(express, jade, console) {
         if (name === undefined) {
             res.render('list_surveys');
         } else {
-            res.send('<h2>' + name + '</h2>');
+            res.render('do_survey', {
+                'survey': { 'name': name },
+            });
         }
     });
 

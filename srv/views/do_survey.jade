@@ -1,0 +1,9 @@
+extends base
+block content
+  h1= "Doing survey: " + survey.name
+  div(class='survey-root')
+    h3 If you can see this, the survey is still loading, or has failed to load.
+  script.
+    require(['surveys/#{survey.name}'], function (SelectedSurvey) {
+      window.survey = new SelectedSurvey('div.survey-root');
+    });
