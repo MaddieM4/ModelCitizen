@@ -10,7 +10,11 @@ var BASE_CONFIG = {
 
 function mcSurvey(selector, config) {
     this.ve = new mcVisualElement(this);
-    this.ve.element.appendTo(selector).addClass('mc-survey');
+    this.ve.element.addClass('mc-survey');
+    $(selector)
+        .first()
+        .empty()
+        .append(this.ve.element);
 
     // Only accessible via closures
     var _private = {
