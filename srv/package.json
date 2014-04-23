@@ -1,0 +1,16 @@
+{
+  "name": "mcsrv",
+  "version": "0.0.1",
+  "description": "Server for ModelCitizen static and dynamic resource hosting, REST API",
+  "main": "index.js",
+  "dependencies": {
+    "requirejs": "*",
+    "express": "*",
+    "jade": "*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Philip Horger",
+  "license": "MIT"
+}

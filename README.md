@@ -34,3 +34,10 @@ This manifests a lot of benefits, for example, in decoupling:
 Barely started development. Like, don't even bother trying to use this, there's like an eight of a skeleton and nothing else.
 
 Thanks for the interest though! I love you, $person->{name}, we should hang out.
+
+## How to run
+
+1. Install node.js
+2. cd srv
+3. npm install # Get dependencies
+4. node index.js # Run server on port 3000
