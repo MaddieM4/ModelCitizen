@@ -16,8 +16,11 @@ requirejs(['express','jade','console'], function(express, jade, console) {
     app.get('/', function(req, res) {
         res.render('index');
     });
-    app.get('/design', function(req, res) {
+    app.get('/design/', function(req, res) {
         res.render('design');
+    });
+    app.get('/api-ref/', function(req, res) {
+        res.render('api-ref');
     });
 
     app.get('/s/:name?', function(req, res) {
