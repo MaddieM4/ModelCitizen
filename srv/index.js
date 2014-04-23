@@ -6,10 +6,19 @@ requirejs.config({
 });
 
 requirejs(['express','jade','console'], function(express, jade, console) {
+    // Create and configure application
     var app = express();
     app.use(express.static('./static'));
     app.engine('jade', jade.__express);
     app.set('view engine', 'jade');
+
+    // Routes
+    app.get('/', function(req, res) {
+        res.render('index');
+    });
+    app.get('/design', function(req, res) {
+        res.render('design');
+    });
 
     app.get('/s/:name?', function(req, res) {
         var name = req.params.name;
@@ -22,6 +31,7 @@ requirejs(['express','jade','console'], function(express, jade, console) {
         }
     });
 
+    // Run
     var server = app.listen(3000, function() {
         console.log('Listening on port %d', server.address().port);
     });

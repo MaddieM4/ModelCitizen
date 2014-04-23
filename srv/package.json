@@ -6,7 +6,8 @@
   "dependencies": {
     "requirejs": "*",
     "express": "*",
-    "jade": "*"
+    "jade": "*",
+    "markdown": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
