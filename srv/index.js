@@ -5,34 +5,12 @@ requirejs.config({
     nodeRequire: require
 });
 
-requirejs(['express','jade','console'], function(express, jade, console) {
+requirejs(['express','console','frontend','api'], function(express, console, fe, api) {
     // Create and configure application
     var app = express();
     app.use(express.static('./static'));
-    app.engine('jade', jade.__express);
-    app.set('view engine', 'jade');
-
-    // Routes
-    app.get('/', function(req, res) {
-        res.render('index');
-    });
-    app.get('/design/', function(req, res) {
-        res.render('design');
-    });
-    app.get('/api-ref/', function(req, res) {
-        res.render('api-ref');
-    });
-
-    app.get('/s/:name?', function(req, res) {
-        var name = req.params.name;
-        if (name === undefined) {
-            res.render('list_surveys');
-        } else {
-            res.render('do_survey', {
-                'survey': { 'name': name },
-            });
-        }
-    });
+    app.use(fe);
+    app.use('/api', api);
 
     // Run
     var server = app.listen(3000, function() {

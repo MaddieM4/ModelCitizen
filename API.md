@@ -2,7 +2,7 @@
 
 This API is primarily for internal use. It's also incredibly unstable. You have been warned. If you make stupid choices, like implementing a client for this spec in another language (and then having the spec move out from under you), that's on you.
 
-## GET /api/:survey/:response/
+## GET /api/resp/:survey/:response/
 
 **PARAMS:**
 
@@ -11,7 +11,7 @@ This API is primarily for internal use. It's also incredibly unstable. You have 
 
 Get current response value for the given SID/RID. Will be mime type application/json.
 
-## POST /api/:survey/:response/
+## POST /api/resp/:survey/:response/
 
 **PARAMS:**
 
