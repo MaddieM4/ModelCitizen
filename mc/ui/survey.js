@@ -1,6 +1,6 @@
-define('js/mc/ui/survey',
-    [ 'jquery',   'js/mc/ui/ve', 'js/mc/value', 'js/mc/listener'],
-    function($, mcVisualElement,      mcValue,        mcListener) {
+define('mc/ui/survey',
+    [ 'jquery','mc/ui/ve',      'mc/value','mc/listener'],
+    function($, mcVisualElement, mcValue,   mcListener) {
 
 var BASE_CONFIG = {
     title: 'Survey Title',

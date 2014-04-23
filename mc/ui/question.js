@@ -1,6 +1,6 @@
-define('js/mc/ui/question',
-    ['jquery',   'js/mc/ui/ve','js/mc/value', 'js/mc/ui/form/basic', 'js/mc/listener'],
-function(   $, mcVisualElement,      mcValue,                    fb,      mcListener) {
+define('mc/ui/question',
+    ['jquery','mc/ui/ve',     'mc/value','mc/ui/form/basic','mc/listener'],
+function(   $, mcVisualElement,mcValue,   fb,                mcListener) {
 
 function mcQuestion(survey, prose) {
     var self = this;

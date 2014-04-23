@@ -1,6 +1,6 @@
-define('js/mc/ui/text',
-    ['js/mc/ui/ve', 'js/mc/value', 'js/mc/listener'],
-    function(mcVisualElement, mcValue, mcListener) {
+define('mc/ui/text',
+    ['mc/ui/ve',             'mc/value','mc/listener'],
+    function(mcVisualElement, mcValue,   mcListener) {
 
 function mcTextDisplay(survey, prose) {
     var self = this;

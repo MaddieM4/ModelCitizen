@@ -1,4 +1,4 @@
-define('js/mc/ui/ve', ['jquery', 'js/mc/value'], function($, mcValue) {
+define('mc/ui/ve', ['jquery', 'mc/value'], function($, mcValue) {
 
 function mcVisualElement(survey) {
     var self = this;

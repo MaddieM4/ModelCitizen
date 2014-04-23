@@ -1,6 +1,6 @@
 define('surveys/demo',
-    ['js/mc/ui/survey','js/mc/ui/question','js/mc/ui/text','js/mc/ui/group'],
-    function( mcSurvey, mcQuestion,         mcTextDisplay, mcQuestionGroup) {
+    ['mc/ui/survey','mc/ui/question','mc/ui/text',  'mc/ui/group'],
+    function( mcSurvey, mcQuestion,   mcTextDisplay, mcQuestionGroup) {
 
 function DemoSurvey(selector) {
     var config = {

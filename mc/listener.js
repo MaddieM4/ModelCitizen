@@ -1,4 +1,4 @@
-define('js/mc/listener', ['jquery'], function($) {
+define('mc/listener', ['jquery'], function($) {
 
 function mcListener(parent_listener) {
     this.finders = {};

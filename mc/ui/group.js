@@ -1,6 +1,6 @@
-define('js/mc/ui/group',
-    ['js/mc/ui/ve', 'js/mc/value', 'js/mc/listener'],
-    function(mcVisualElement, mcValue, mcListener) {
+define('mc/ui/group',
+    ['mc/ui/ve',             'mc/value', 'mc/listener'],
+    function(mcVisualElement, mcValue,    mcListener) {
 
 function mcQuestionGroup(survey) {
     var self = this;

@@ -1,4 +1,4 @@
-define('js/mc/option',[], function(){
+define('mc/option',[], function(){
 
 function mcOption(item, key) {
     this.source = item;

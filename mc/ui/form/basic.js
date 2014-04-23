@@ -1,6 +1,6 @@
-define('js/mc/ui/form/basic',
-    ['jquery', 'js/mc/value', 'js/mc/option'],
-    function($, mcValue,       mcOption) {
+define('mc/ui/form/basic',
+    ['jquery', 'mc/value', 'mc/option'],
+    function($, mcValue,    mcOption) {
 
 function _options(option_template, option_list) {
     var i, option, option_string, option_element;

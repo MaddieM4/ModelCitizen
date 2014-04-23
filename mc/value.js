@@ -1,4 +1,4 @@
-define('js/mc/value', ['jquery'], function($) {
+define('mc/value', ['jquery'], function($) {
 
 function mcValue(default_value, initial_value) {
     // Make this data available to methods, as closures,
