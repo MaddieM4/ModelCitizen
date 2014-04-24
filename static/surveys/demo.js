@@ -5,6 +5,7 @@ define('surveys/demo',
 function DemoSurvey(selector) {
     var config = {
         title: 'Demo survey',
+        name: 'demo',
     }
     var s = new mcSurvey(selector, config);
     this.survey = s;

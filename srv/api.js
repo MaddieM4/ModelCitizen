@@ -18,15 +18,24 @@ define('api', ['express','body-parser','db'], function(express, bp, db) {
             db.get(sql, params, function(err, row) {
                 if (err !== null) {
                     console.error(err);
-                    res.json(500, { error: err });
+                    return res.json(500, {
+                        error: 'DB error (' + err.toString() + ')'
+                    });
                 }
                 if (row === undefined) {
                     // No data, but not an error. Client side will legitimately
                     // interpret both err and value to be undefined.
                     res.json({});
                 } else {
-                    // Requires a bit of unpacking
-                    res.json({value: row.value});
+                    try {
+                        var value = JSON.parse(row.value);
+                    } catch(err) {
+                        console.error(err);
+                        return res.json(500, {
+                            error: 'Non-JSON data in DB (' + err.toString() + ')'
+                        });
+                    }
+                    res.json({value: value});
                 }
             });
         })
@@ -37,14 +46,17 @@ define('api', ['express','body-parser','db'], function(express, bp, db) {
             var params = {
                 $survey: req.params.survey,
                 $response: req.params.response,
-                $value: req.body.value
+                $value: JSON.stringify(req.body.value)
             };
             db.run(sql, params, function(err) {
                 if (err === null) {
                     res.json({success: true, value: params.$value})
                 } else {
                     console.error(err)
-                    res.json({success: false, error: err})
+                    return res.json(500, {
+                        success: false,
+                        error: 'Failed to set data (' + err.toString() + ')'
+                    });
                 }
             });
         })

@@ -5,10 +5,12 @@ define('mc/ui/survey',
 var BASE_CONFIG = {
     title: 'Survey Title',
     description: 'A survey',
-    footer: 'Survey powered by <a href="https://github.com/campadrenalin/ModelCitizen">ModelCitizen</a> framework.'
+    footer: 'Survey powered by <a href="https://github.com/campadrenalin/ModelCitizen">ModelCitizen</a> framework.',
+    baseUrl: '/api'
 };
 
 function mcSurvey(selector, config) {
+    var self = this;
     this.ve = new mcVisualElement(this);
     this.ve.element.addClass('mc-survey');
     $(selector)
@@ -36,7 +38,9 @@ function mcSurvey(selector, config) {
 
     this.getResponse = function(name) {
         if (_private[name] === undefined) {
-            _private[name] = new mcValue();
+            var val = new mcValue();
+            val.subscribe(self.sendResponse.bind(self, name));
+            _private[name] = val;
         }
         return _private[name];
     }
@@ -61,6 +65,38 @@ mcSurvey.prototype.append = function(item) {
 
 mcSurvey.prototype.on = function() {
     this.listener.on.apply(this.listener, arguments);
+}
+
+mcSurvey.prototype.sendResponse = function(name) {
+    if (!this.config.name) {
+        return;
+    }
+    var response = this.getResponse(name);
+    var url = [this.config.baseUrl, 'resp', this.config.name, name, ''].join('/');
+    var data = { value: response.getValue() };
+    function on_success(ajax_response) {
+        console.log("Successfully set " + name + " to:");
+        console.log(data.value);
+        console.log(ajax_response);
+    }
+    function on_error(ajax_response) {
+        console.error("Could not set " + name + " to:");
+        console.error(data.value);
+        console.error(ajax_response);
+    }
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: data
+    }).done(function(data) {
+        if (data.error !== undefined || !data.success) {
+            on_error(data);
+        } else {
+            on_success(data);
+        }
+    }).fail(function(jqXHR, textStatus) {
+        on_error(textStatus);
+    });
 }
 
 return mcSurvey;
