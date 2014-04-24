@@ -6,6 +6,7 @@
   "dependencies": {
     "requirejs": "*",
     "express": "*",
+    "body-parser": "*",
     "jade": "*",
     "markdown": "*",
     "sqlite3": "*"
