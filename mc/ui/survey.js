@@ -39,8 +39,11 @@ function mcSurvey(selector, config) {
     this.getResponse = function(name) {
         if (_private[name] === undefined) {
             var val = new mcValue();
-            val.subscribe(self.sendResponse.bind(self, name));
             _private[name] = val;
+
+            // Load current value from DB, and send changes when they happen
+            self.loadResponse(name);
+            val.subscribe(self.sendResponse.bind(self, name));
         }
         return _private[name];
     }
@@ -87,17 +90,40 @@ mcSurvey.prototype.sendResponse = function(name) {
     $.ajax({
         url: url,
         type: 'POST',
-        data: data
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify(data)
     }).done(function(data) {
         if (data.error !== undefined || !data.success) {
             on_error(data);
         } else {
             on_success(data);
         }
-    }).fail(function(jqXHR, textStatus) {
+    }).fail(function(_, textStatus) {
         on_error(textStatus);
     });
 }
+
+mcSurvey.prototype.loadResponse = function(name) {
+    if (!this.config.name) {
+        return;
+    }
+    var response = this.getResponse(name);
+    var url = [this.config.baseUrl, 'resp', this.config.name, name, ''].join('/');
+    $.ajax(url)
+    .done(function(data) {
+        // TODO: store is-set data in DB, perhaps by row presence
+        if (data.value === undefined) {
+            response.unSet();
+        } else {
+            console.log("Setting " + name + " to " + JSON.stringify(data.value));
+            response.setValue(data.value);
+        }
+    }).fail(function(jqXHR, textStatus) {
+        console.error(textStatus);
+        console.error(jqXHR.responseText);
+    })
+}
+
 
 return mcSurvey;
 

@@ -1,6 +1,6 @@
 define('api', ['express','body-parser','db'], function(express, bp, db) {
     var app = express();
-    app.use(bp());
+    app.use(bp.json());
 
     // Routes
     app.get('/', function(req, res) {
@@ -50,7 +50,7 @@ define('api', ['express','body-parser','db'], function(express, bp, db) {
             };
             db.run(sql, params, function(err) {
                 if (err === null) {
-                    res.json({success: true, value: params.$value})
+                    res.json({success: true, value: req.body.value})
                 } else {
                     console.error(err)
                     return res.json(500, {
