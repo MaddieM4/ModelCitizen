@@ -19,9 +19,20 @@ define('frontend', ['express','jade'], function(express, jade) {
     app.get('/s/:name?', function(req, res) {
         var name = req.params.name;
         if (name === undefined) {
-            res.render('list_surveys');
+            res.render('list_surveys', { 'url_prefix': 's' });
         } else {
             res.render('do_survey', {
+                'survey': { 'name': name },
+            });
+        }
+    });
+
+    app.get('/v/:name?', function(req, res) {
+        var name = req.params.name;
+        if (name === undefined) {
+            res.render('list_surveys', { 'url_prefix': 'v' });
+        } else {
+            res.render('view_survey', {
                 'survey': { 'name': name },
             });
         }

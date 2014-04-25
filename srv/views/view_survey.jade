@@ -1,0 +1,9 @@
+extends base
+block content
+  h1= "Viewing results of survey: " + survey.name
+  div(class='viz-root')
+    h3 If you can see this, the survey is still loading, or has failed to load.
+  script.
+    require(['surveys/#{survey.name}/viz'], function (SurveyVisualizer) {
+      window.viz = SurveyVisualizer('div.viz-root');
+    });

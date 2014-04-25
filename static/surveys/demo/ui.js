@@ -1,16 +1,9 @@
-define('surveys/demo',
-    ['mc/ui/survey','mc/ui/question','mc/ui/text',  'mc/ui/group'],
-    function( mcSurvey, mcQuestion,   mcTextDisplay, mcQuestionGroup) {
+define('surveys/demo/ui/questions',
+    ['mc/ui/question',   'mc/ui/text',  'mc/ui/group'],
+    function(mcQuestion, mcTextDisplay, mcQuestionGroup) {
 
-function DemoSurvey(selector) {
-    var config = {
-        title: 'Demo survey',
-        name: 'demo',
-    }
-    var s = new mcSurvey(selector, config);
-    this.survey = s;
-
-    this.questions = [
+function GetQuestions(s) {
+    return [
         new mcQuestion(s, "Firefighters are good for the economy.")
             .radio(['Yes', 'No'], 'firefighters'),
         new mcQuestion(s, "Roads are good for the economy.")
@@ -60,6 +53,21 @@ function DemoSurvey(selector) {
                 group.setVisible(sm_value.getValue() ? true : false);
             })
     ];
+}
+
+return GetQuestions;
+
+});
+
+define('surveys/demo/ui',
+    ['mc/ui/survey',   'surveys/demo/config', 'surveys/demo/ui/questions'],
+    function(mcSurvey, config,                GetQuestions) {
+
+function DemoSurvey(selector) {
+    var s = new mcSurvey(selector, config);
+    this.survey = s;
+
+    this.questions = GetQuestions(s);
 
     for (var i=0; i<this.questions.length; i++) {
         this.survey.append(this.questions[i]);
