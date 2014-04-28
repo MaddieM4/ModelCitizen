@@ -46,3 +46,23 @@ div.mc-question .mc-contents {
 div.mc-hidden {
     display: none;
 }
+
+div.mc-viz {
+    margin: 10px;
+    padding: 5px;
+    border: 5px solid #DDD;
+}
+
+.mc-viz-table table {
+    width: 100%;
+}
+.mc-viz-table thead td {
+    background-color: #FEE;
+    border-bottom: 2px solid #E44;
+}
+.mc-viz-table td {
+    background-color: #EEE;
+    border-bottom: 2px solid #DDD;
+
+    padding: 5px;
+}
