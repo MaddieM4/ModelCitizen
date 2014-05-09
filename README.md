@@ -37,7 +37,14 @@ Thanks for the interest though! I love you, $person->{name}, we should hang out.
 
 ## How to run
 
-1. Install node.js
-2. cd srv
-3. npm install # Get dependencies
-4. node index.js # Run server on port 3000
+1. Install [node.js](http://nodejs.org/)
+2. git clone https://github.com/campadrenalin/ModelCitizen.git
+3. cd srv
+4. npm install # Get dependencies
+5. node index.js # Run server on port 3000
+
+If you want to help develop ModelCitizen, you should fork it via the Github UI, and clone the fork (using the SSH download URL of your fork, rather than the HTTPS link I gave in the earlier instructions). Then you should probably add the upstream repo as follows:
+
+    git remote add upstream git@github.com:campadrenalin/ModelCitizen.git
+
+If you have a philosophical objection to Github, that's fine. It does mean you're smart and anti-mainstream enough to figure things out on your own, though, because I only have the patience for one set of handhold-y instructions.

@@ -1,6 +1,6 @@
 define('surveys/demo/ui/questions',
-    ['mc/ui/question',   'mc/ui/text',  'mc/ui/group'],
-    function(mcQuestion, mcTextDisplay, mcQuestionGroup) {
+            ['mc/ui/question',   'mc/ui/text',  'mc/ui/group'   ],
+    function( mcQuestion,         mcTextDisplay, mcQuestionGroup) {
 
 function GetQuestions(s) {
     return [
