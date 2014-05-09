@@ -5,7 +5,8 @@ define('mc/ui/viz/main',
 var BASE_CONFIG = {
     title: 'Survey Title',
     description: 'A survey',
-    baseUrl: '/api'
+    baseUrl: '/api',
+    respondentName: 'Bongo McTweadlepants'
 };
 
 function mcVizMain(selector, config) {
@@ -18,7 +19,10 @@ function mcVizMain(selector, config) {
         .append(this.ve.element);
 
     this.config = $.extend(true, BASE_CONFIG, config);
-    this.api = new mcApi({ survey_id: this.config.name });
+    this.api = new mcApi({
+        survey_id: this.config.name,
+        respondent_id: this.config.respondentName
+    });
     this.rset = new mcResponseSet(this.api);
 
     this.title = new mcValue("", this.config.title);

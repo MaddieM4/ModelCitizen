@@ -6,14 +6,16 @@ define('api', ['express','body-parser','db'], function(express, bp, db) {
     app.get('/', function(req, res) {
         res.json({success:true});
     });
-    app.route('/resp/:survey/:response/')
+    app.route('/resp/:survey/:response/:respondent/')
         .get(function(req, res) {
             var sql = 'SELECT value FROM response WHERE '
                 +'survey_name = $survey '
-                +'AND response_name = $response;';
+                +'AND response_name = $response '
+                +'AND respondent_name = $respondent;';
             var params = {
                 $survey: req.params.survey,
-                $response: req.params.response
+                $response: req.params.response,
+                $respondent: req.params.respondent,
             };
             db.get(sql, params, function(err, row) {
                 if (err !== null) {
@@ -46,7 +48,7 @@ define('api', ['express','body-parser','db'], function(express, bp, db) {
             var params = {
                 $survey: req.params.survey,
                 $response: req.params.response,
-                $respondent: req.params.respondent || '',
+                $respondent: req.params.respondent,
                 $value: JSON.stringify(req.body.value)
             };
             db.run(sql, params, function(err) {

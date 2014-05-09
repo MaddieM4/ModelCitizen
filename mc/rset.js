@@ -27,7 +27,7 @@ mcResponseSet.prototype.sendResponse = function(name) {
     var response = this.getResponse(name);
     var params = { value: response.getValue() };
 
-    this.api.call('POST /resp/$survey_id/$response_id/',
+    this.api.call('POST /resp/$survey_id/$response_id/$respondent_id/',
         { response_id: name },
         params
     ).done(function(ajax_response) {
@@ -44,7 +44,7 @@ mcResponseSet.prototype.sendResponse = function(name) {
 mcResponseSet.prototype.loadResponse = function(name) {
     var response = this.getResponse(name);
 
-    this.api.call('GET /resp/$survey_id/$response_id/',
+    this.api.call('GET /resp/$survey_id/$response_id/$respondent_id/',
         { response_id: name }
     ).done(function(data) {
         // TODO: store is-set data in DB, perhaps by row presence
