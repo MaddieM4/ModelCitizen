@@ -28,6 +28,11 @@ function mcSurvey(selector, config) {
     this.title = new mcValue("", this.config.title);
     this.ve.element.append(this.title.text('<div class="mc-survey-title">'));
 
+    this.ve.element.append(
+        $('<div class="mc-respondent-name">Your username is </div>')
+            .append($('<em>').text(this.config.respondentName))
+    );
+
     this.desc = new mcValue("", this.config.description);
     this.ve.element.append(this.desc.text('<div class="mc-survey-desc">'));
 

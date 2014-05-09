@@ -35,8 +35,11 @@ mcVizTable.prototype.append_responses = function(responses) {
 mcVizTable.prototype.redraw = function() {
     var responses = this.responses.getValue();
     this.contents.empty();
+    // TODO: Fix injection weakness here (respondent names like Bobby Tables)
     this.contents.append(
         '<thead><tr>'
+        +'<td colspan="2" class="table-name">'+this.viz.config.respondentName+'</td>'
+        +'</tr><tr>'
         +'<td width="170">Response name</td>'
         +'<td>Response value</td>'
         +'</tr></thead>'

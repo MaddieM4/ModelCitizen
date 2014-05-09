@@ -11,6 +11,10 @@ div.mc-survey-title {
     font-size: 1.3em;
 }
 
+div.mc-respondent-name {
+    float: right;
+}
+
 div.mc-survey-desc {
     border-bottom: 1px solid #E44;
     padding: 10px 5px;
@@ -59,6 +63,12 @@ div.mc-viz {
 .mc-viz-table thead td {
     background-color: #FEE;
     border-bottom: 2px solid #E44;
+}
+.mc-viz-table thead td.table-name {
+    background-color: #E44;
+    border-bottom: 2px solid #B33;
+    color: white;
+    font-weight: bold;
 }
 .mc-viz-table td {
     background-color: #EEE;
