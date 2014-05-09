@@ -11,9 +11,10 @@ define('db', ['fs', 'sqlite3'], function(fs, sqlite3) {
             db.run('CREATE TABLE response ('
                 +'survey_name VARCHAR(255) REFERENCES surveys(name),'
                 +'response_name VARCHAR(255),'
+                +'respondent_name VARCHAR(255),'
                 +'value TEXT)');
             db.run('CREATE UNIQUE INDEX response_location '
-                +'ON response(survey_name, response_name)');
+                +'ON response(survey_name, response_name, respondent_name)');
             db.run('CREATE TABLE migrations (date VARCHAR(128), version INTEGER)');
         }
     });

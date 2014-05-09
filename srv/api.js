@@ -41,11 +41,12 @@ define('api', ['express','body-parser','db'], function(express, bp, db) {
         })
         .post(function(req, res) {
             var sql = 'INSERT OR REPLACE INTO response '
-                +'(survey_name, response_name, value) '
-                +'VALUES($survey, $response, $value)';
+                +'(survey_name, response_name, respondent_name, value) '
+                +'VALUES($survey, $response, $respondent, $value)';
             var params = {
                 $survey: req.params.survey,
                 $response: req.params.response,
+                $respondent: req.params.respondent || '',
                 $value: JSON.stringify(req.body.value)
             };
             db.run(sql, params, function(err) {
